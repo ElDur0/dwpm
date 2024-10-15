@@ -7,30 +7,86 @@
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'GET':
             $res  = obtenerPeliculas($conn);
-            echo $res;
+            array();
+            $array['status']    = 200;
+            $array['error']     = false;
+            $array['data']      = $res;
+            $array = json_encode($array);
+            echo $array;
+            die();
             break;
         
         case 'POST':
-             
-            if ($data = json_decode(file_get_contents("php://input"),true)) {
-                //$data2 = json_encode($data);
-                //echo $data2;
-                //$conn = conexion($conexion);
-                //echo $data['nombre'];
-                $nombre     = $data['nombre'];
-                $year       = $data['year'];
-                $portada    = $data['portada'];
-                insertarPelicula($conn, $nombre, $year, $portada);
+            if ($data = json_decode(file_get_contents("php://input"))) {
+                
+                $respuesta = insertarPelicula($conn, $data->nombre, $data->year, $data->portada,$data->estado);
+                $array=array();
+                $array['estatus']   = 200;
+                $array['error']     = false;
+                $array['data']      = $respuesta;
+                $array= json_encode($array);
+                echo $array;
+                die(); 
             }else {
                 $array=array();
-                $array['estatus'] = 400;
-                $array['error'] = "Error de datos";
-                $array = json_encode($array);
+                $array['estatus']   = 400;
+                $array['error']     = true;
+                $array['data']      = "Error en la insersión";
+                $array= json_encode($array);
                 echo $array;
                 die(); 
             }
             break;
-            default:
+        case 'PATCH':
+            if ($data = json_decode(file_get_contents("php://input"))) {
+                
+                $respuesta = modificarPelicula($conn, $data->nombre, $data->year, $data->portada,$data->estado);
+                //$respuesta =($conn, $id, $nombre, $year, $portada );
+                $array=array();
+                $array['estatus']   = 200;
+                $array['error']     = false;
+                $array['data']      = $respuesta;
+                $array= json_encode($array);
+                echo $array;
+                die(); 
+            }else {
+                $array=array();
+                $array['estatus']   = 400;
+                $array['error']     = true;
+                $array['data']      = "Error al modificar pelicula";
+                $array= json_encode($array);
+                echo $array;
+                die(); 
+            }
+            break;
+            
+            
+
+            
+        case 'DELETE':
+            if($data = json_decode(file_get_contents('php://input'))){
+                $respuesta = eliminarPelicula($conn, $data->id);
+                $array=array();
+                $array['estatus']=200;
+                $array['error'] = false;
+                $array['data'] = $respuesta;
+                $array= json_encode($array);
+                echo $array;
+                die();
+            }else {
+                $array=array();
+                $array['estatus']   = 400;
+                $array['error']     = true;
+                $array['data']      = "Error al eliminar pelicula";
+                $array= json_encode($array);
+                echo $array;
+                die(); 
+            }
+            break;
+
+        default:
+            echo"no deberías estar aqui";
+        
             break;
     }
     cerrarConexion($conn, $conexion);
