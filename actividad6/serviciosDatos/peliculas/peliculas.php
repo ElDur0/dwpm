@@ -31,7 +31,7 @@
     }
     function modificarPelicula($conn, $id, $nombre, $year, $portada){
         $stmt = $conn->prepare("UPDATE peliculas SET nombre=?, year=?, portada=? WHERE id=?");
-        $stmt->bind_param("sssi", $nombre, $year, $portada,$id);
+        $stmt->bind_param("sssi", $nombre, $year, $portada, $id);
         if ($stmt->execute()) {
             $respuesta = array(
                 'nombre' => $nombre,
@@ -43,8 +43,9 @@
             
         }else{
             
-            echo json_encode("Error".$stmt->error,UTF8);
+            echo "Error: ".$stmt->error;
         }
+        $stmt->close();
         
     }
     function eliminarPelicula($conn , $id){
@@ -61,4 +62,5 @@
             
             echo json_encode("Error: ".$stmt->error,UTF8);
         }
+        $stmt->close();
     }

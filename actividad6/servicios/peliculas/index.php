@@ -40,8 +40,7 @@
         case 'PATCH':
             if ($data = json_decode(file_get_contents("php://input"))) {
                 
-                $respuesta = modificarPelicula($conn, $data->nombre, $data->year, $data->portada,$data->estado);
-                //$respuesta =($conn, $id, $nombre, $year, $portada );
+                $respuesta = modificarPelicula($conn, $data->id, $data->nombre, $data->year,$data->portada);
                 $array=array();
                 $array['estatus']   = 200;
                 $array['error']     = false;
@@ -59,9 +58,6 @@
                 die(); 
             }
             break;
-            
-            
-
             
         case 'DELETE':
             if($data = json_decode(file_get_contents('php://input'))){
