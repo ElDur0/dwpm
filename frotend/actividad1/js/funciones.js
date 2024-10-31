@@ -43,10 +43,13 @@ async function obtenerPeliculas(){
     .then((response) => response.text())
     .then((result) => {
         const datos = JSON.parse(result);
+        const contenido = JSON.parse(datos.data);
         if(datos.status!=200){
             throw new Error ('Error en la respuesta API')
         }else{
-            document.getElementById('cardContainer').innerHTML=datos.data;
+            document.getElementById('cardsPeliculas').innerHTML=contenido.card;
+            document.getElementById('tablaPeliculas').innerHTML=contenido.tabla;
+            let table = new DataTable('#myTable', {});
         }
     })
     .catch((error) => console.error(error));

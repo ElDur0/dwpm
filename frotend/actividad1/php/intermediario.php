@@ -42,6 +42,7 @@ if(isset($data->endpoint)){
       $respuesta = curlPHP($url, $metodo, $datos, $auth);
       $respuesta = json_decode($respuesta);
       $html="";
+      $html2="";
       if($respuesta->status==200){
         $datos = json_decode($respuesta->data,true);
 
@@ -49,19 +50,32 @@ if(isset($data->endpoint)){
           $html.="
           
                 <div class='card'>
-                    <img src='http://localhost/dwpm/actividad6/img/peliculas/$pelicula[3]' alt='{$pelicula[1]}' class='card-img'>
+                    <img src='img/$pelicula[3]' alt='{$pelicula[1]}' class='card-img'>
                     <div class='card-content'>
                         <h3 class='card-title'>{$pelicula[1]}</h3>
                         <p class='card-text'>Año: {$pelicula[2]}</p>
                     </div>
                 </div>
           ";
+          $html2.="
+            <tr>
+              <td>{$pelicula[0]}</td>
+              <td>{$pelicula[1]}</td>
+              <td>{$pelicula[2]}</td>
+              <td>{$pelicula[3]}</td>
+            </tr>
+          ";
           
         }
+        $respuesta = array(
+          "card" => $html,
+          "tabla" => $html2
+        );
+        $respuesta = json_encode($respuesta);
         $array=array();
         $array['status']	=	200;
         $array['error']   =	false;
-        $array['data']   	=	$html;
+        $array['data']   	=	$respuesta;
         $array=json_encode($array,UTF8);
         echo $array;
         die();
