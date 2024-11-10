@@ -9,4 +9,3 @@ $conexion = array(
     "password"   => "peliculas",
     "dbname"     => "clase"
 );
-$datos = 'peliculas/peliculas.php';
