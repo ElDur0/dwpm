@@ -77,20 +77,7 @@ if(isset($data->endpoint)){
       $respuesta = json_decode($respuesta);
       $html="";
       if($respuesta->status==200){
-       // $datos = json_decode($respuesta->data);
 
-        /*foreach($datos as $loteria){
-          $html.="
-          
-                <div class='grid-item'>
-                    <img src='img/$loteria[0]' alt='{$loteria[1]}'>
-                </div>
-          ";
-        }
-        $respuesta = array(
-          "tablero" => $html
-        );*/
-       // $respuesta = json_encode($respuesta,UTF8);
         $respuesta = $respuesta->data;
         $array=array();
         $array['status']	=	200;
@@ -101,8 +88,30 @@ if(isset($data->endpoint)){
         die();
       }
     }
-
   }
+  if($data->endpoint == "buscarCarta"){
+    if($data->metodo == "GET"){
+      $url = 'http://localhost/dwpm/examen3/servicios/loteria/';
+      $metodo = "GET";
+      $datos=null;
+      $auth = "123";
+      $respuesta = curlPHP($url, $metodo, $datos, $auth);
+      $respuesta = json_decode($respuesta);
+      $html="";
+      if($respuesta->status==200){
+
+        $respuesta = $respuesta->data;
+        $array=array();
+        $array['status']	=	200;
+        $array['error']   =	false;
+        $array['data']   	=	$respuesta;
+        $array = json_encode($array,UTF8);
+        echo $array;
+        die();
+      }
+    }
+  }
+  
 }else{
   $array = array();
   $array['status']	=	500;

@@ -8,10 +8,22 @@
         <script defer src="js/funciones.js"></script>
     </head>
     <body>
-        <div class="grid-container" id="cardsLoteria">
+        <div class="main-container">
             
+            <div class="search-container">
+                <h3>Buscar carta</h3>
+                <input type="text" id="searchInput" placeholder="Escribe el nombre de la carta">
+                <button onclick="buscarCarta()">Buscar</button>
+                <div id="resultadosBusqueda" class="resultados-busqueda"></div>
+            </div>
+            
+            <div class="grid-container" id="cardsLoteria"></div>
+            
+            <div class="carta-container">
+                <div id="cartaActual" class="carta-actual"></div>        
+                <button id="cantarBtn" onclick="cantar_loteria()">Cantar Lotería</button>
+            </div>
+        
         </div>
-        <button onclick="cantar_loteria()">Cantar Lotería</button>
-        <div id="cartaActual" class="carta-actual"></div>        
     </body>
 </html>

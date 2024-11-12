@@ -70,4 +70,51 @@ async function cantar_loteria(){
     })
     .catch((error) => console.error(error));
 }
+async function buscarCarta() {
+    const query = document.getElementById("searchInput").value;
+    const resultadosDiv = document.getElementById("resultadosBusqueda");
+
+    if (query.trim() === "") {
+        resultadosDiv.innerHTML = "Por favor, ingresa un nombre para buscar.";
+        return;
+    }
+
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", "123");
+    myHeaders.append("Content-Type", "application/json");
+
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify({
+            endpoint: 'buscarCarta',
+            metodo: 'GET',
+            query: query // El parámetro de búsqueda
+        }),
+        redirect: "follow"
+    };
+
+    await fetch("http://localhost/dwpm/examen3/front/php/intermediario.php", requestOptions)
+        .then((response) => response.text())
+        .then((result) => {
+            const datos = JSON.parse(result);
+            if (datos.status != 200) {
+                throw new Error('Error en la respuesta API');
+            } else {
+                const cartas = JSON.parse(datos.data);
+                if (cartas.length > 0) {
+                    resultadosDiv.innerHTML = cartas
+                        .map(carta => `<div class="grid-item"><img src="img/${carta[0]}">${carta[1]}</div>`)
+                        .join("");
+                } else {
+                    resultadosDiv.innerHTML = "No se encontraron coincidencias.";
+                }
+            }
+        })
+        .catch((error) => {
+            console.error("Error en la búsqueda:", error);
+            resultadosDiv.innerHTML = "Ocurrió un error en la búsqueda.";
+        });
+}
+
 
