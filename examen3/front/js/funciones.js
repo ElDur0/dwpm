@@ -27,7 +27,7 @@ async function dibujarTablero(){
     })
     .catch((error) => console.error(error));
 }
-
+dibujarTablero();
 async function cantar_loteria(){
     const myHeaders = new Headers();
     myHeaders.append("Authorization", "123");
@@ -51,14 +51,13 @@ async function cantar_loteria(){
             throw new Error ('Error en la respuesta API')
         }else{
             let cartas= contenido;
-            document.getElementById('cardsLoteria').innerHTML='';
             let index=0;
             const mostrarCarta=()=>{
                 if (index < cartas.length) {
                     // Mostrar la carta en el contenedor
                     const carta = cartas[index];
                     const cartaHTML = `<div class="grid-item"><img src="img/${carta[0]}"></div>`;
-                    document.getElementById('cardsLoteria').innerHTML = cartaHTML;
+                    document.getElementById('cartaActual').innerHTML = cartaHTML;
                     index++;
 
                     // Llamar nuevamente a la función con un pequeño retraso (1 segundo, por ejemplo)
@@ -72,4 +71,3 @@ async function cantar_loteria(){
     .catch((error) => console.error(error));
 }
 
-dibujarTablero();
