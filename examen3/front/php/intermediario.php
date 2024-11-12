@@ -91,13 +91,15 @@ if(isset($data->endpoint)){
   }
   if($data->endpoint == "buscarCarta"){
     if($data->metodo == "GET"){
+      $id = $data->query;
       $url = 'http://localhost/dwpm/examen3/servicios/loteria/';
+      $url = $url.'?id='.$id;
       $metodo = "GET";
       $datos=null;
       $auth = "123";
       $respuesta = curlPHP($url, $metodo, $datos, $auth);
       $respuesta = json_decode($respuesta);
-      $html="";
+      
       if($respuesta->status==200){
 
         $respuesta = $respuesta->data;

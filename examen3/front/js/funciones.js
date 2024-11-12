@@ -75,7 +75,7 @@ async function buscarCarta() {
     const resultadosDiv = document.getElementById("resultadosBusqueda");
 
     if (query.trim() === "") {
-        resultadosDiv.innerHTML = "Por favor, ingresa un nombre para buscar.";
+        resultadosDiv.innerHTML = "Por favor, ingresa un id.";
         return;
     }
 
@@ -104,7 +104,7 @@ async function buscarCarta() {
                 const cartas = JSON.parse(datos.data);
                 if (cartas.length > 0) {
                     resultadosDiv.innerHTML = cartas
-                        .map(carta => `<div class="grid-item"><img src="img/${carta[0]}">${carta[1]}</div>`)
+                        .map(carta => `<div class="grid-item"><img src="img/${carta[0]}"></div>`)
                         .join("");
                 } else {
                     resultadosDiv.innerHTML = "No se encontraron coincidencias.";
