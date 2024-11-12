@@ -33,9 +33,9 @@ define("UTF8",JSON_UNESCAPED_UNICODE);
 
 $data = json_decode(file_get_contents("php://input"));
 if(isset($data->endpoint)){
-  if($data->endpoint == "getCartas"){
+  if($data->endpoint == "tablero"){
     if($data->metodo == "GET"){
-      $url = 'http://localhost/dwpm/examen3/servicios/loteria/';
+      $url = 'http://localhost/dwpm/examen3/servicios/loteria/?num=16';
       $metodo = "GET";
       $datos=null;
       $auth = "123";
@@ -48,27 +48,60 @@ if(isset($data->endpoint)){
         foreach($datos as $loteria){
           $html.="
           
-                <div class='card'>
-                    <img src='img/$loteria[0]' alt='{$loteria[0]}' class='card-img'>
-                    <div class='card-content'>
-                        <h3 class='card-title'>{$loteria[1]}</h3>
-                    </div>
+                <div class='grid-item'>
+                    <img src='img/$loteria[0]' alt='{$loteria[1]}'>
                 </div>
           ";
         }
         $respuesta = array(
-          "tablero" => $html,
+          "tablero" => $html
         );
-        $respuesta = json_encode($respuesta);
+        $respuesta = json_encode($respuesta,UTF8);
         $array=array();
         $array['status']	=	200;
         $array['error']   =	false;
         $array['data']   	=	$respuesta;
-        //$array=json_encode($array,UTF8);
+        $array = json_encode($array,UTF8);
         echo $array;
         die();
       }
     }
+  }
+  if($data->endpoint == "cantarLoteria"){
+    if($data->metodo == "GET"){
+      $url = 'http://localhost/dwpm/examen3/servicios/loteria/';
+      $metodo = "GET";
+      $datos=null;
+      $auth = "123";
+      $respuesta = curlPHP($url, $metodo, $datos, $auth);
+      $respuesta = json_decode($respuesta);
+      $html="";
+      if($respuesta->status==200){
+       // $datos = json_decode($respuesta->data);
+
+        /*foreach($datos as $loteria){
+          $html.="
+          
+                <div class='grid-item'>
+                    <img src='img/$loteria[0]' alt='{$loteria[1]}'>
+                </div>
+          ";
+        }
+        $respuesta = array(
+          "tablero" => $html
+        );*/
+       // $respuesta = json_encode($respuesta,UTF8);
+        $respuesta = $respuesta->data;
+        $array=array();
+        $array['status']	=	200;
+        $array['error']   =	false;
+        $array['data']   	=	$respuesta;
+        $array = json_encode($array,UTF8);
+        echo $array;
+        die();
+      }
+    }
+
   }
 }else{
   $array = array();
