@@ -38,15 +38,14 @@ async function obtenerPeliculas(){
     .then((response) => response.text())
     .then((result) => {
 		console.log(result)
-        /*const datos     = JSON.parse(result)
+        const datos     = JSON.parse(result)
         const respuesta = JSON.parse(datos.data)
         if(datos.status!=200){
             throw new Error ('Error en la respuesta API')
         }else{
-            document.getElementById('cardsPeliculas').innerHTML = respuesta.card
-            document.getElementById('tablaPeliculas').innerHTML = respuesta.tabla
-            let table = new DataTable('#myTable', {});
-        }*/
+            document.getElementById('cards').innerHTML = respuesta.card
+            
+        }
     })
     .catch((error) => console.error(error));
 }
