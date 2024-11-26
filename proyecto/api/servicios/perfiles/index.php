@@ -17,5 +17,24 @@ switch($_SERVER['REQUEST_METHOD']){
         
         break;
     case 'POST':
+        if($data = json_decode(file_get_contents("php://input"))){
+            $conn  =	conexion($conexion);
+            $res   =	insertarPerfil($conn, $data->nombre, $data->puesto,$data->puesto, $data->edad, $data->educacion, $data->locacion, $data->foto, $data->biografia, $data->metas, $data->motivaciones, $data->preocupaciones);
+            $array=array();
+            $array['status']	=	200;
+            $array['error']   	=	false;
+            $array['data']   	=	$res;
+            $array=json_encode($array,UTF8);
+            echo $array;
+            die();
+        }else{
+            $array=array();
+            $array['status']	=	400;
+            $array['error']   	=	true;
+            $array['data']   	=	"";
+            $array=json_encode($array);
+            echo $array;
+            die();
+        }
         break;
 }

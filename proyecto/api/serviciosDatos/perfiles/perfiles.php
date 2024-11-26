@@ -36,3 +36,29 @@
         $stmt->close();
 
     }
+    function modificarPerfil($conn, $id, $nombre, $puesto, $edad, $educacion, $locacion, $foto, $biografia, $metas, $motivaciones, $preocupaciones){
+        $stmt = $conn->prepare("UPDATE perfiles SET nombre_perf=?, puesto=?, edad=?, educacion=?, locacion=?, foto=?, biografia=?, metas=?, motivaciones=?, preocupaciones=? WHERE id=?");
+        $stmt->bind_param("ssisssssssi", $nombre, $puesto, $edad, $educacion, $locacion, $foto, $biografia, $metas, $motivaciones, $preocupaciones,$id);
+        if ($stmt->execute()) {
+            $respuesta = array( 
+                'id'=>$id,
+                'nombre' => $nombre,
+                'puesto' => $puesto,
+                'edad'=> $edad,
+                'educacion'=> $educacion,
+                'locacion'=> $locacion,
+                'foto'=> $foto,
+                'biografia'=> $biografia,
+                'metas'=> $metas,
+                'motivaciones'=> $motivaciones,
+                'preocupaciones'=> $preocupaciones
+            );
+            return json_encode($respuesta,UTF8);
+            
+        }else{
+            
+            echo "Error: ".$stmt->error;
+        }
+        $stmt->close();
+        
+    }
