@@ -7,7 +7,7 @@ function seguridad(){
         body: "",
         redirect: "follow"
     };
-    fetch("http://localhost/dwpm/integrador/actividad1/app/php/seguridad.php", requestOptions)
+    fetch("http://localhost/dwpm/proyecto/app/php/seguridad.php", requestOptions)
     .then((response) => response.text())
     .then((result) => {
         console.log(result)
@@ -21,7 +21,7 @@ function seguridad(){
     .catch((error) => console.error(error));
 }
 seguridad();
-async function obtenerPeliculas(){
+async function obtenerPerfiles(){
     const myHeaders = new Headers();
     myHeaders.append("Authorization", "123");
     myHeaders.append("Content-Type", "application/json");
@@ -29,12 +29,12 @@ async function obtenerPeliculas(){
         method: "POST",
         headers: myHeaders,
         body: JSON.stringify({
-            endpoint: 'getPeliculas',
+            endpoint: 'getPerfiles',
             metodo: 'GET'
         }),
         redirect: "follow"
     };
-    await fetch("http://localhost/dwpm/integrador/actividad1/app/php/intermediario.php", requestOptions)
+    await fetch("http://localhost/dwpm/proyecto/app/php/intermediario.php", requestOptions)
     .then((response) => response.text())
     .then((result) => {
 		console.log(result)
@@ -49,4 +49,4 @@ async function obtenerPeliculas(){
     })
     .catch((error) => console.error(error));
 }
-obtenerPeliculas();
+obtenerPerfiles();

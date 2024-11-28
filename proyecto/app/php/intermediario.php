@@ -37,9 +37,9 @@ $data = json_decode(file_get_contents("php://input"));
 
 if(isset($_SESSION["llave_peticion"])){
   if(isset($data->endpoint)){
-    if($data->endpoint == "getPeliculas"){
+    if($data->endpoint == "getPerfiles"){
       if($data->metodo == "GET"){
-        $url = 'http://localhost/dwpm/integrador/actividad1/api/servicios/peliculas';
+        $url = 'http://localhost/dwpm/proyecto/api/servicios/perfiles/';
         $metodo = "GET";
         $datos=null;
         $auth = "123";
@@ -50,17 +50,17 @@ if(isset($_SESSION["llave_peticion"])){
         if($respuesta->status==200){
           $datos = json_decode($respuesta->data,true);
   
-          foreach($datos as $pelicula){
+          foreach($datos as $perfil){
             $html.="
                   <div class='col'>
                     <div class='card shadow-sm'>
-                      <img src='img/{$pelicula[3]}' class='card-img-top' style='width: 100%; height: 225px; object-fit: cover;' alt='Imagen personalizada'>
+                      <img src='img/{$perfil[6]}' class='card-img-top' style='width: 100%; height: 225px; object-fit: cover;' alt='Imagen personalizada'>
                       <div class='card-body'>
-                        <p class='card-text'>Pelicula: {$pelicula[1]} <br>Año: {$pelicula[2]} </p>
+                        <p class='card-text'>Perfil: {$perfil[1]} </p>
                         <div class='d-flex justify-content-between align-items-center'>
                           <div class='btn-group'>
                             <button type='button' class='btn btn-sm btn-outline-secondary'>View</button>
-                            <button type='button' class='btn btn-sm btn-outline-secondary'>Edit</button>
+                            
                           </div>
                           <small class='text-body-secondary'>9 mins</small>
                         </div>
@@ -71,10 +71,10 @@ if(isset($_SESSION["llave_peticion"])){
             ";
             $html2.="
               <tr>
-                <td>{$pelicula[0]}</td>
-                <td>{$pelicula[1]}</td>
-                <td>{$pelicula[2]}</td>
-                <td>{$pelicula[3]}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
             ";
             

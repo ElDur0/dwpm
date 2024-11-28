@@ -71,8 +71,8 @@
 	background-attachment: fixed;
 }
 [data-bs-theme=dark] .backgroundPelicula{
-	background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../img/portada.webp');
+	background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../img/background.jpg');
 }
 [data-bs-theme=light] .backgroundPelicula{
-	background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('../img/portada.webp');
+	background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('../img/background.jpg');
 }
