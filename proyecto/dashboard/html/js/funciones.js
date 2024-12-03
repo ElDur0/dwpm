@@ -20,3 +20,32 @@ function seguridad(){
     .catch((error) => console.error(error));
 }
 seguridad();
+async function obtenerPerfiles(){
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", "123");
+    myHeaders.append("Content-Type", "application/json");
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: JSON.stringify({
+            endpoint: 'getPerfiles',
+            metodo: 'GET'
+        }),
+        redirect: "follow"
+    };
+    await fetch("http://localhost/dwpm/proyecto/dashboard/php/intermediario.php", requestOptions)
+    .then((response) => response.text())
+    .then((result) => {
+		console.log(result)
+        const datos     = JSON.parse(result)
+        const respuesta = JSON.parse(datos.data)
+        if(datos.status!=200){
+            throw new Error ('Error en la respuesta API')
+        }else{
+            document.getElementById('cards').innerHTML = respuesta.card
+            
+        }
+    })
+    .catch((error) => console.error(error));
+}
+obtenerPerfiles();

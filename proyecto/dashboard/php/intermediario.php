@@ -58,6 +58,55 @@ if(isset($_SESSION["llave_peticion"])){
         }
       }
     }
+    if($data->endpoint == "getPerfiles"){
+      if($data->metodo == "GET"){
+        $url = 'http://localhost/dwpm/proyecto/api/servicios/perfiles/';
+        $metodo = "GET";
+        $datos=null;
+        $auth = "123";
+        $respuesta = curlPHP($url, $metodo, $datos, $auth);
+        $respuesta = json_decode($respuesta);
+        $html="";
+        if($respuesta->status==200){
+          $datos = json_decode($respuesta->data,true);
+  
+          foreach($datos as $perfil){
+            $html.="
+                  <div class='col'>
+                    <div class='card shadow-sm'>
+                      <img src='../../app/img/{$perfil[6]}' class='card-img-top' style='width: 100%; height: 225px; object-fit: cover;' alt='Imagen personalizada'>
+                      <div class='card-body'>
+                        <p class='card-text'>Perfil: {$perfil[1]} </p>
+                        <div class='d-flex justify-content-between align-items-center'>
+                          <div class='btn-group'>
+                            <a href='../../app/perfil.html?id={$perfil[0]}' class='btn btn-sm btn-outline-secondary'>Ver</a>
+                            <a href='perfil.html?id={$perfil[0]}' class='btn btn-sm btn-outline-secondary'>Editar</a>
+                            <a href='perfil.html?id={$perfil[0]}' class='btn btn-sm btn-outline-secondary'>Eliminar</a>
+                          </div>
+                          <small class='text-body-secondary'>9 mins</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+            ";
+            
+          }
+          $respuesta = array(
+            "card" => $html,
+            "data" => $respuesta->data
+          );
+          $respuesta = json_encode($respuesta);
+          $array=array();
+          $array['status']	=	200;
+          $array['error']   =	false;
+          $array['data']   	=	$respuesta;
+          $array=json_encode($array,UTF8);
+          echo $array;
+          die();
+        }
+      }
+    }
   }else{
     $array=array();
     $array['status']	=	501;
