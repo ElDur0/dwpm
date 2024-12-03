@@ -7,7 +7,7 @@
         case 'POST':
             if($data = json_decode(file_get_contents("php://input"))){
 				$conn  =	conexion($conexion);
-				$res   =	login($conn,$data->usuario,$data->clave);
+				$res   =	login($conn,$data->usuario,$data->password);
 				$array=array();
 				$array['status']	=	200;
 				$array['error']   	=	false;

@@ -5,6 +5,6 @@ $conexion = array(
     "servername"=>"localhost",
     "username"=> "Luis",
     "password"=>"peliculas",
-    "dbname"=>"clase"
+    "dbname"=>"proyecto"
 );
 $datos = 'login/login.php';
