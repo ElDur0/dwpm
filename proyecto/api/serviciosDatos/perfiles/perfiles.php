@@ -1,13 +1,26 @@
 <?php
     function obtenerPerfiles($conn){
         
-        $sql        = "SELECT * FROM perfiles";
+        $sql        = "SELECT * FROM perfiles WHERE estado = 1";
         $result     =   $conn->query($sql);
         $row        =   $result->fetch_all();
         $row        =  json_encode($row,UTF8);
         return $row;
         
     }
+    function eliminarPerfil($conn, $id) {
+        // Prepara la consulta para evitar inyección SQL
+        $stmt = $conn->prepare("UPDATE perfiles SET estado = 0 WHERE id = ?");
+        $stmt->bind_param("i", $id); // "i" indica que $id es un entero
+        if($stmt->execute()){
+            $respuesta = array(
+                'id'=> $conn->insert_id
+            );
+        }
+        $stmt->close(); // Cierra el statement
+        return json_encode($respuesta, UTF8); // Devuelve la respuesta en JSON
+    }
+    
     function obtenerDatosPerfil($conn, $id){
         $sql = "SELECT * FROM perfiles WHERE id = $id";
         $result = $conn->query($sql);

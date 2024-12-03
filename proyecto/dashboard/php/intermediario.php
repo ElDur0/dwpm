@@ -80,8 +80,8 @@ if(isset($_SESSION["llave_peticion"])){
                         <div class='d-flex justify-content-between align-items-center'>
                           <div class='btn-group'>
                             <a href='../../app/perfil.html?id={$perfil[0]}' class='btn btn-sm btn-outline-secondary'>Ver</a>
-                            <a href='perfil.html?id={$perfil[0]}' class='btn btn-sm btn-outline-secondary'>Editar</a>
-                            <a href='perfil.html?id={$perfil[0]}' class='btn btn-sm btn-outline-secondary'>Eliminar</a>
+                            <a  class='btn btn-sm btn-outline-secondary'>Editar</a>
+                            <a  class='btn btn-sm btn-outline-secondary' onclick='eliminarPerfil({$perfil[0]})'>Eliminar</a>
                           </div>
                           <small class='text-body-secondary'>9 mins</small>
                         </div>
@@ -105,6 +105,38 @@ if(isset($_SESSION["llave_peticion"])){
           echo $array;
           die();
         }
+      }
+    }
+    if($data->endpoint == "eliminarPerfil"){
+      if($data->metodo == "POST"){
+        $url = 'http://localhost/dwpm/proyecto/api/servicios/perfiles/';
+        $metodo = "POST";
+        $datos = array(
+          'id'=>$data->query
+        );
+        $datos = json_encode($datos, JSON_UNESCAPED_UNICODE);
+        $auth = "123";
+        $respuesta = curlPHP($url, $metodo, $datos, $auth);
+        $respuesta = json_decode($respuesta);
+        if($respuesta->status==200){
+          $array=array();
+          $array['status']	=	200;
+          $array['error']   =	false;
+          $array['data']   	=	$respuesta->data;
+          $array=json_encode($array,UTF8);
+          echo $array;
+          die();
+        }else{
+          $respuesta ="No jala";
+          $array['status']	=	500;
+          $array['error']   =	false;
+          $array['data']   	=	$respuesta;
+          $array=json_encode($array,UTF8);
+          echo $array;
+          die();
+
+        }
+
       }
     }
   }else{

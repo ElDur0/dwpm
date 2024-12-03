@@ -23,9 +23,14 @@ switch($_SERVER['REQUEST_METHOD']){
         
         break;
     case 'POST':
+        $conn  =	conexion($conexion);
         if($data = json_decode(file_get_contents("php://input"))){
-            $conn  =	conexion($conexion);
-            $res   =	insertarPerfil($conn, $data->nombre, $data->puesto,$data->puesto, $data->edad, $data->educacion, $data->locacion, $data->foto, $data->biografia, $data->metas, $data->motivaciones, $data->preocupaciones);
+            if($data->id){
+                $res = eliminarPerfil($conn, $data->id);
+            }else{
+
+                $res   =	insertarPerfil($conn, $data->nombre, $data->puesto,$data->puesto, $data->edad, $data->educacion, $data->locacion, $data->foto, $data->biografia, $data->metas, $data->motivaciones, $data->preocupaciones);
+            }
             $array=array();
             $array['status']	=	200;
             $array['error']   	=	false;
