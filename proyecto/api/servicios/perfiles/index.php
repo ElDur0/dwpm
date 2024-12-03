@@ -29,7 +29,7 @@ switch($_SERVER['REQUEST_METHOD']){
                 $res = eliminarPerfil($conn, $data->id);
             }else{
 
-                $res   =	insertarPerfil($conn, $data->nombre, $data->puesto,$data->puesto, $data->edad, $data->educacion, $data->locacion, $data->foto, $data->biografia, $data->metas, $data->motivaciones, $data->preocupaciones);
+                $res   =	insertarPerfil($conn, $data->nombre, $data->puesto,$data->edad, $data->educacion, $data->locacion, "foto.jpg", $data->biografia, $data->metas, $data->motivaciones, $data->preocupaciones);
             }
             $array=array();
             $array['status']	=	200;

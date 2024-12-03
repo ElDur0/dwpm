@@ -139,6 +139,35 @@ if(isset($_SESSION["llave_peticion"])){
 
       }
     }
+    if($data->endpoint == "agregarPerfil"){
+      if($data->metodo== "POST"){
+        $url = 'http://localhost/dwpm/proyecto/api/servicios/perfiles/';
+        $metodo = "POST";
+        $datos = $data->datos;
+        $datos = json_encode($datos, JSON_UNESCAPED_UNICODE);
+        $auth = "123";
+        $respuesta = curlPHP($url, $metodo, $datos, $auth);
+        $respuesta = json_decode($respuesta);
+        if($respuesta->status==200){
+          $array=array();
+          $array['status']	=	200;
+          $array['error']   =	false;
+          $array['data']   	=	$respuesta->data;
+          $array=json_encode($array,UTF8);
+          echo $array;
+          die();
+        }else{
+          $respuesta ="No inserta";
+          $array['status']	=	500;
+          $array['error']   =	false;
+          $array['data']   	=	$respuesta;
+          $array=json_encode($array,UTF8);
+          echo $array;
+          die();
+
+      }
+    }
+  }
   }else{
     $array=array();
     $array['status']	=	501;
