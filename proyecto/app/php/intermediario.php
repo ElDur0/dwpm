@@ -46,7 +46,6 @@ if(isset($_SESSION["llave_peticion"])){
         $respuesta = curlPHP($url, $metodo, $datos, $auth);
         $respuesta = json_decode($respuesta);
         $html="";
-        $html2="";
         if($respuesta->status==200){
           $datos = json_decode($respuesta->data,true);
   
@@ -59,8 +58,8 @@ if(isset($_SESSION["llave_peticion"])){
                         <p class='card-text'>Perfil: {$perfil[1]} </p>
                         <div class='d-flex justify-content-between align-items-center'>
                           <div class='btn-group'>
-                            <button type='button' class='btn btn-sm btn-outline-secondary'>View</button>
-                            
+                            <a href='perfil.html?id={$perfil[0]}' class='btn btn-sm btn-outline-secondary'>View</a>
+
                           </div>
                           <small class='text-body-secondary'>9 mins</small>
                         </div>
@@ -69,19 +68,11 @@ if(isset($_SESSION["llave_peticion"])){
                   </div>
 
             ";
-            $html2.="
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            ";
             
           }
           $respuesta = array(
             "card" => $html,
-            "tabla" => $html2
+            "data" => $respuesta->data
           );
           $respuesta = json_encode($respuesta);
           $array=array();
@@ -92,6 +83,82 @@ if(isset($_SESSION["llave_peticion"])){
           echo $array;
           die();
         }
+      }
+    }
+    if($data->endpoint == "buscarPerfil"){
+      if($data->metodo == "GET"){
+        $id  = $data->query;
+        $url = 'http://localhost/dwpm/proyecto/api/servicios/perfiles/';
+        $url = $url.'?id='.$id;
+        $metodo = "GET";
+        $datos = null;
+        $auth = "123";
+        $respuesta = curlPHP($url,$metodo,$datos, $auth);
+        $respuesta = json_decode($respuesta);
+        $html="<h1>holo</h1>";
+        
+        if($respuesta->status==200){
+          $datos = json_decode($respuesta->data, true);
+          $perfil= $datos[0];
+
+          $html ="
+          <div class='row'>
+      <div class='col-md-4 text-center'>
+        <div class='profile-card'>
+          <img src='img/$perfil[6]' alt='Ann Doe'>
+          <h3>$perfil[1]</h3>
+          <p>$perfil[2]r</p>
+          <p><strong>Age:</strong>$perfil[3]</p>
+          <p><strong>Education:</strong> $perfil[4]</p>
+          <p><strong>Location:</strong> $perfil[5]</p>
+        </div>
+      </div>
+      
+
+      <div class='col-md-8'>
+        <div class='row g-3'>
+          <div class='col-md-6'>
+            <div class='info-card'>
+              <h5>Bio</h5>
+              <p>$perfil[7]</p>
+            </div>
+          </div>
+          <div class='col-md-6'>
+            <div class='info-card'>
+              <h5>Goals</h5>
+              <p>$perfil[8]</p>
+            </div>
+          </div>
+          <div class='col-md-6'>
+            <div class='info-card'>
+              <h5>Motivations</h5>
+              <p>$perfil[9]</p>
+            </div>
+          </div>
+          <div class='col-md-6'>
+            <div class='info-card'>
+              <h5>Concerns</h5>
+              <p>$perfil[10]</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+          ";
+
+          $resp = array(
+            "contenido" => $html
+          );
+          $resp = json_encode($resp,UTF8);
+          $array=array();
+          $array['status']	=	200;
+          $array['error']   =	false;
+          $array['data']   	=	 $resp; 
+          $array = json_encode($array,UTF8);
+          echo $array;
+          die();
+        }
+
       }
     }
   }

@@ -8,6 +8,13 @@
         return $row;
         
     }
+    function obtenerDatosPerfil($conn, $id){
+        $sql = "SELECT * FROM perfiles WHERE id = $id";
+        $result = $conn->query($sql);
+        $row = $result->fetch_all();
+        $row = json_encode($row, UTF8);
+        return $row;
+    }
     function insertarPerfil($conn, $nombre, $puesto, $edad, $educacion, $locacion, $foto, $biografia, $metas, $motivaciones, $preocupaciones){
         $stmt = $conn->prepare("INSERT INTO perfiles (nombre_perf, puesto, edad, educacion,locacion,foto,biografia,metas,motivaciones,preocupaciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssisssssss", $nombre, $puesto, $edad, $educacion, $locacion, $foto, $biografia, $metas, $motivaciones, $preocupaciones);  // "sis" significa string, integer, string

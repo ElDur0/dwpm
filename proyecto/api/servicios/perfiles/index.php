@@ -5,8 +5,14 @@ include_once '../../base/encabezado.php';
 
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
-            $conn  =	conexion($conexion);
+        $conn  =	conexion($conexion);
+        if(isset($_GET['id'])){
+            $id   = $_GET['id'];
+            $res  = obtenerDatosPerfil($conn, $id);
+        }else{
+
             $res   =	obtenerPerfiles($conn);
+        }
             $array=array();
             $array['status']	=	200;
             $array['error']   	=	false;
